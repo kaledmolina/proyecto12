@@ -19,22 +19,6 @@ export function HeroSection({ article, onClick }: HeroSectionProps) {
     : ''
 
   return (
-    <motion.section
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.6 }}
-      className="relative cursor-pointer overflow-hidden"
-      onClick={onClick}
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault()
-          onClick()
-        }
-      }}
-    >
-  return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 pb-4">
       <motion.section
         initial={{ opacity: 0, y: 20 }}
