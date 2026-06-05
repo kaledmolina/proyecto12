@@ -40,6 +40,14 @@ const SETTINGS_FIELDS: SettingField[] = [
     group: 'general',
   },
   {
+    key: 'site_favicon',
+    label: 'Icono del Sitio (Favicon)',
+    type: 'image',
+    description: 'El icono de la pestaña del navegador (favicon, preferiblemente .ico, .png o .svg)',
+    icon: <Globe className="h-4 w-4" />,
+    group: 'general',
+  },
+  {
     key: 'site_description',
     label: 'Descripción del Sitio',
     type: 'textarea',
