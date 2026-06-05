@@ -1,7 +1,7 @@
 services:
   db:
     image: mysql:8.0
-    container_name: mysql-database
+    container_name: mysql-database-colombiadebate
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
@@ -9,25 +9,25 @@ services:
     # Los puertos 3306 se eliminaron por seguridad. 
     # La web igual puede conectarse internamente.
     volumes:
-      - mysql_data:/var/lib/mysql
+      - mysql_data_colombiadebate:/var/lib/mysql
 
   web:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: nextjs-web-app
+    container_name: nextjs-web-app-colombiadebate
     ports:
-      - "127.0.0.1:3000:3000" # Modificado para obligar a pasar por CloudPanel
+      - "127.0.0.1:3001:3000" # Modificado para obligar a pasar por CloudPanel en puerto 3001
     depends_on:
       - db
     environment:
       - DATABASE_URL=mysql://root:rootpassword@db:3306/news_portal
-      - NEXTAUTH_URL=https://pulso24.tech # CRÍTICO para que el login funcione
+      - NEXTAUTH_URL=https://colombiadebate.com # CRÍTICO para que el login funcione en producción
       - NEXTAUTH_SECRET=news-portal-secret-key-change-in-production
       - HOSTNAME=0.0.0.0 # <-- LA SOLUCIÓN AL ERROR 502
     volumes:
-      - /home/pulso24/htdocs/pulso24.tech/public/uploads:/app/public/uploads
+      - /home/colombiadebate/htdocs/colombiadebate.com/public/uploads:/app/public/uploads
     restart: always
 
 volumes:
-  mysql_data:
+  mysql_data_colombiadebate:
