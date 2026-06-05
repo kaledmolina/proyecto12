@@ -220,7 +220,7 @@ function LoginModal({
 // ============================================================
 // Main App with Auth
 // ============================================================
-function AppContent() {
+export function AppContent() {
   const { data: session, status } = useSession()
   const [loginOpen, setLoginOpen] = useState(false)
   const [view, setView] = useState<'public' | 'admin'>('public')
