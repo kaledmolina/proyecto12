@@ -74,8 +74,8 @@ model Article {
   id          String        @id @default(cuid())
   title       String
   slug        String        @unique
-  content     String        @default("") @db.Text
-  excerpt     String        @default("") @db.Text
+  content     String        @db.Text
+  excerpt     String        @db.Text
   coverImage  String?
   status      ArticleStatus @default(DRAFT)
   isFeatured  Boolean       @default(false)
