@@ -25,7 +25,10 @@ services:
       - NEXTAUTH_URL=https://pulso24.tech # CRÍTICO para que el login funcione
       - NEXTAUTH_SECRET=news-portal-secret-key-change-in-production
       - HOSTNAME=0.0.0.0 # <-- LA SOLUCIÓN AL ERROR 502
+    volumes:
+      - uploads_data:/app/public/uploads
     restart: always
 
 volumes:
   mysql_data:
+  uploads_data:
