@@ -39,17 +39,25 @@ function PublicPortal({ onLoginClick }: { onLoginClick: () => void }) {
   const fetchArticle = usePublicStore((s) => s.fetchArticle)
   const selectedCategory = usePublicStore((s) => s.selectedCategory)
   const searchQuery = usePublicStore((s) => s.searchQuery)
+  
+  const [isInitialLoading, setIsInitialLoading] = useState(true)
 
   useEffect(() => {
-    fetchCategories()
-    fetchSettings()
-  }, [fetchCategories, fetchSettings])
-
-  useEffect(() => {
-    if (currentView === 'home') {
-      fetchArticles({ limit: 16 })
+    const init = async () => {
+      try {
+        await Promise.all([
+          fetchCategories(),
+          fetchSettings(),
+          fetchArticles({ limit: 16 }),
+        ])
+      } catch (err) {
+        console.error('Failed to load initial portal data:', err)
+      } finally {
+        setIsInitialLoading(false)
+      }
     }
-  }, [currentView, fetchArticles])
+    init()
+  }, [fetchCategories, fetchSettings, fetchArticles])
 
   // Get articles for HeroSection: featured ones first, or fallback to top 8 latest
   const featured = articles.filter((a) => a.isFeatured)
@@ -57,6 +65,22 @@ function PublicPortal({ onLoginClick }: { onLoginClick: () => void }) {
 
   // Show Hero Section only when on the homepage cover (no active category filter or search query)
   const showHero = currentView === 'home' && !selectedCategory && !searchQuery && heroArticles.length > 0
+
+  if (isInitialLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <div className="flex flex-col items-center gap-4">
+          <div className="relative flex h-12 w-12 items-center justify-center">
+            <div className="absolute h-12 w-12 animate-ping rounded-full bg-destructive/10" />
+            <div className="h-10 w-10 animate-spin rounded-full border-4 border-destructive border-t-transparent" />
+          </div>
+          <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground font-heading animate-pulse">
+            Cargando portal...
+          </p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
