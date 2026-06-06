@@ -132,24 +132,6 @@ export function HeroCarousel({ articles, onArticleClick }: HeroCarouselProps) {
                 </p>
 
                 <div className="flex flex-wrap items-center gap-4 text-xs text-white/70">
-                  {activeArticle.author && (
-                    <div className="flex items-center gap-2">
-                      {activeArticle.author.avatar ? (
-                        <Image
-                          src={activeArticle.author.avatar}
-                          alt={activeArticle.author.name}
-                          width={28}
-                          height={28}
-                          className="rounded-full ring-2 ring-white/30"
-                        />
-                      ) : (
-                        <div className="flex h-7 w-7 items-center justify-center rounded-full bg-white/20 ring-2 ring-white/30">
-                          <User className="h-3.5 w-3.5 text-white/80" />
-                        </div>
-                      )}
-                      <span className="font-semibold text-white">{activeArticle.author.name}</span>
-                    </div>
-                  )}
                   {publishedDate && (
                     <div className="flex items-center gap-1.5 text-white/60">
                       <Clock className="h-3.5 w-3.5" />

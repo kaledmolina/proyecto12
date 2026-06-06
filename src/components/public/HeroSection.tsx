@@ -63,10 +63,6 @@ export function HeroSection({ articles, onArticleClick }: HeroSectionProps) {
             </p>
 
             <div className="flex items-center gap-3 text-[10px] text-muted-foreground pt-1">
-              {leadArticle.author && (
-                <span className="font-semibold text-foreground/85">{leadArticle.author.name}</span>
-              )}
-              <span className="text-muted-foreground/30">•</span>
               <div className="flex items-center gap-0.5">
                 <Eye className="h-3 w-3" />
                 <span>{leadArticle.views} vistas</span>

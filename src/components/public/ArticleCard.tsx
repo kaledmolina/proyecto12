@@ -73,12 +73,8 @@ export function ArticleCard({ article, onClick }: ArticleCardProps) {
 
         {/* Meta */}
         <div className="flex items-center gap-2 text-[10px] text-muted-foreground pt-1">
-          {article.author && (
-            <span className="font-semibold text-foreground/80">{article.author.name}</span>
-          )}
-          {article.author && publishedDate && <span className="text-muted-foreground/40">•</span>}
           {publishedDate && <span>{publishedDate}</span>}
-          <span className="text-muted-foreground/40">•</span>
+          {publishedDate && <span className="text-muted-foreground/40">•</span>}
           <div className="flex items-center gap-0.5">
             <Eye className="h-3 w-3" />
             <span>{article.views}</span>

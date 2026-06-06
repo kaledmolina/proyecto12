@@ -71,12 +71,14 @@ export default async function Page({ params }: Props) {
   }
 
   // Map the tags array to match state type
+  const { author, ...articleWithoutAuthor } = article
   const mappedArticle = {
-    ...article,
+    ...articleWithoutAuthor,
     createdAt: article.createdAt.toISOString(),
     updatedAt: article.updatedAt.toISOString(),
     publishedAt: article.publishedAt ? article.publishedAt.toISOString() : null,
     tags: article.tags.map((at) => at.tag),
+    author: undefined,
   }
 
   return <ArticlePageClient article={mappedArticle as any} />

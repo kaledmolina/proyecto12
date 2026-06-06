@@ -30,10 +30,16 @@ export async function GET(
       data: { views: { increment: 1 } },
     });
 
+    const session = await getServerSession(authOptions);
+    const isAdminOrWriter = !!(session && ["ADMIN", "WRITER"].includes(session.user.role));
+
+    const { author, ...rest } = article;
+
     return NextResponse.json({
-      ...article,
+      ...rest,
       views: article.views + 1,
       tags: article.tags.map((at) => at.tag),
+      author: isAdminOrWriter ? author : undefined,
     });
   } catch (error) {
     return NextResponse.json(

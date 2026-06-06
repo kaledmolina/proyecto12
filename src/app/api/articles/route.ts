@@ -30,9 +30,11 @@ export async function GET(request: NextRequest) {
     const statusParam = searchParams.get("status") || "PUBLISHED";
     const where: Record<string, unknown> = {};
 
+    const session = await getServerSession(authOptions);
+    const isAdminOrWriter = !!(session && ["ADMIN", "WRITER"].includes(session.user.role));
+
     if (statusParam !== "PUBLISHED") {
-      const session = await getServerSession(authOptions);
-      if (!session || !["ADMIN", "WRITER"].includes(session.user.role)) {
+      if (!isAdminOrWriter) {
         return NextResponse.json({ error: "Forbidden" }, { status: 403 });
       }
 
@@ -86,10 +88,14 @@ export async function GET(request: NextRequest) {
     ]);
 
     return NextResponse.json({
-      articles: articles.map((a) => ({
-        ...a,
-        tags: a.tags.map((at) => at.tag),
-      })),
+      articles: articles.map((a) => {
+        const { author, ...rest } = a;
+        return {
+          ...rest,
+          tags: a.tags.map((at) => at.tag),
+          author: isAdminOrWriter ? author : undefined,
+        };
+      }),
       total,
       page,
       limit,
